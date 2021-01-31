@@ -89,9 +89,11 @@ Gain的值越小，某屬性分出來的凌亂程度越大，用來分資料越�
 同樣的算法我們算出：
 <img src="http://chart.googleapis.com/chart?cht=tx&chl= $$Giniage(fat)=(\frac{5}{10})\times (0.48)+(\frac{5}{10})\times (0.48)=0.48$$" style="border:none;">
 所以，我們可以發現：
+
 Gini的值越小，某屬性分出來的凌亂程度越小，用來分資料越好！
 
 Gain的值越大，某屬性分出來的凌亂程度越大，用來分資料越差！
+
 ![image4](https://github.com/Evabc/DataMining_MachineLearning/blob/master/1_Classification/1.1_%E6%B1%BA%E7%AD%96%E6%A8%B9_Decision%20Trees/image/4.JPG)
 
 #### 1.1.5 決策樹演算法
