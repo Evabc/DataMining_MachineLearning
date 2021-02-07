@@ -10,6 +10,8 @@
 
 在開始做任何分析或學習前，最重要的就是知道我們用「什麼樣」的資料，最後想得到「什麼樣」的結果，基本上可分成5種形式的model：
 
+![](https://github.com/Evabc/DataMining_MachineLearning/blob/master/image/4.JPG "image4")
+
 * **分類（classification）**：分類學習是從已經分類好的一群資料中，找出各分類的模式及特徵後，再依據這個規則套用在未知分類的資料，進行分類的預測。
 
   e.g. 我們隨便找100位有花錢去電影院看復仇者聯盟4的觀眾，記下他們的性別、年紀、職業、居住區域、已/未婚、有沒有看過前作系列等資訊。之後我們可以從路上隨便抓一個路人A，根據我們剛剛選的6個分類，來預測路人A會不會花錢去電影院看復仇者聯盟4。
@@ -33,15 +35,15 @@
 | 9號肥宅      | 41-50      | 看過1部       | 無       |
 | 10號肥宅     | 21-30      | 看過3部       | 有       |
 
+![](https://github.com/Evabc/DataMining_MachineLearning/blob/master/image/1.JPG "image1")
+
 * **關聯規則（association）**：從資料中找到頻繁項（frequent patterns）、資料間的關聯（association ）或因果結構（causal structures）。而序向規則（sequence）有點類似上面的關聯規則，但序向規則多了順序的概念。
-
-
 
   e.g. 最經典的關聯規則例子就是尿布啤酒，因為星期五太太會請先生幫忙買尿布回家，而順手買了週末可以輕鬆一下的啤酒。
 
   而序向規則可以想成，通常我們先買了吐司後，後面買果醬的機率會遠大於買沙茶醬的機率。
 
-
+![](https://github.com/Evabc/DataMining_MachineLearning/blob/master/image/3.JPG "image3")
 
 * **回歸（regression）**：我們透過現有的資料，找出一條regression，它能代表某項的資料特徵。之後在不同的資料集，也能用這條regression預測出新的資料
 
