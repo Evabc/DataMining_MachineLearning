@@ -68,12 +68,18 @@ l= loss function, 算y及g(x)的差異,要用那種方式可自行決定(cross e
 <img src="http://chart.googleapis.com/chart?cht=tx&chl= f_t(x) = -\frac{\vartheta(L(y, g_{t-1}(x)))}{\vartheta(g_{t-1}(x))}" style="border:none;">
 
 整理一下Gradient Boosting 算法流程：
+
 **Algorithm** Gradient Boosting
 1. 初始化
+
 2. For t=1:T Do : 從1開始到T個弱分類器，分別做：
+
     2.1 Compute the negative gradient 計算負梯度
+    
     2.2 Fit a weak learner which minimize 透過最小化平方誤差(擬合殘差)，產生新的弱分類器
+    
     2.3 Update 更新函數
+    
 3. Return 
 
 下面的圖分別寫了用了不同的loss function分別的負梯度為什麼。如果Gradient Boosting中採用平方損失函數(Squared error)，損失函數負梯度計算出來剛好是殘差(yi-f(x))，因此網路上有些寫Gradient Boosting是每一個弱學習器是在擬合之前累積模型的殘差。但這樣的說法感覺不太對，因為如果使用其他loss function或者在損失函數中加入regularization(正則項)，那麼負梯度就不會剛好是殘差了～
