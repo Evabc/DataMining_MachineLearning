@@ -1,5 +1,5 @@
 #### 1.3.1  什麼是Gradient Boosting?
-在講GBDT，一定要先瞭解Gradient Boosting，要先瞭解Gradient Boosting，我們先複習一下(或點我看)：
+在講GBDT，一定要先瞭解Gradient Boosting，要先瞭解Gradient Boosting，我們先複習一下[點我看](https://github.com/Evabc/DataMining_MachineLearning/tree/master/1_Classification/1.2_%E9%9A%A8%E6%A9%9F%E6%A3%AE%E6%9E%97_Random%20Forest "1.2_Random Forest")：
 * Boosting
 Boosting是Ensemble learning中非常重要的概念，基本原理就是根據前一個弱分類器，再生成一個新的弱分類器，有序列性的產生一堆堆弱分類器們後，再把弱分類器們組合成一個強の分類器。
 Boosting的重點只有兩個：
@@ -24,46 +24,51 @@ AdaBoost是通過改變訓練資料的權重來找新的分類器，而Gradient 
 假設銀魂裡神樂為14歲，第一個弱分類器擬合結果為11，則殘差為14-11=3，殘差=3 。
 而這個「殘差=3 」它就是下一個弱分類器的學習目標，第二個弱分類器擬合結果為2，則這兩個弱分類器組合而成的Boosting 模型對於神樂的預測為11 + 2 = 13，以此類推可以繼續增加弱學習器以提高性能。
 
+![](https://github.com/Evabc/DataMining_MachineLearning/blob/master/1_Classification/1.3_%E6%A2%AF%E5%BA%A6%E6%8F%90%E5%8D%87%E6%B1%BA%E7%AD%96%E6%A8%B9_GBDT/image/1.jpg "image1")
+
 Gradient Boosting還有一個很重要的概念「**函數空間上的梯度下降**」
 我們比較熟悉的Gradient Descent通常是值在參數空間上（e.g.訓練神經網絡，每輪迭代中計算當前損失關於參數的梯度，對參數進行更新）。而在Gradient Boosting中，每輪迭代生成一個弱分類器，這個弱分類器擬合loss function關於*之前累積*弱分類器的梯度，然後將新找的弱學習器加入累積function中，逐漸降低累積模型的損失。即參數空間的梯度下降利用梯度信息調整參數降低損失，函數空間的梯度下降利用梯度擬合一個新的函數降低損失。
 
 現在，我們要找能夠彌補前一個弱分類器的新分類器，所以：
-$$g_{_t}(x)= g_{_{t-1}}(x) + \alpha_tf_t(x)$$ (式1)
 
-這個$$g_t(x)$$所有分類器加權總合
+<img src="http://chart.googleapis.com/chart?cht=tx&chl= g_{_t}(x)= g_{_{t-1}}(x) + \alpha_tf_t(x)" style="border:none;">(式1)
 
-$$g_{t-1}(x)$$代表所有舊分類器加權總合
+g_t(x)所有分類器加權總合
 
-$$f_t(x)$$代表新找出來的分類器
+g_t-1(x)代表所有舊分類器加權總合
 
-$$\alpha_t$$代表新找出來的分類器的權重
+f_t(x)代表新找出來的分類器
+
+α_t代表新找出來的分類器的權重
 
 那我們怎麼找一個好的新分類器，讓它能得到一個好的所有分類器加權總合(gt(X))?
 
 這時候我們先幫gt(x)設個目標：
 
-$$L(g)=\sum_{i=1}^nl(y_i,g(x_i))$$ (式2)
+<img src="http://chart.googleapis.com/chart?cht=tx&chl= L(g)=\sum_{i=1}^nl(y_i,g(x_i))" style="border:none;">(式2)
 
 n= 所有的training data
+
 y= 已知的label
+
 g(x)= 分類器所預測的結果
+
 l= loss function, 算y及g(x)的差異,要用那種方式可自行決定(cross entropy or mse...)
 
-我們再回顧一下Gradient Descent的公式
-Gradient Descent用來優化最小化損失函數L(θ), 進而求出對應的參數θ
+我們再回顧一下Gradient Descent的公式：Gradient Descent用來優化最小化損失函數L(θ), 進而求出對應的參數θ
 
-$$\theta=\theta-\alpha \cdot \frac{\vartheta}{\vartheta\theta}L(\theta)$$ (式3)
+<img src="http://chart.googleapis.com/chart?cht=tx&chl= \theta=\theta-\alpha \cdot \frac{\vartheta}{\vartheta\theta}L(\theta)" style="border:none;">(式3)
 
 再回到我們的gt(x)目標(式2), 我們就把g(x)當成參數，則同樣可以使用Gradient Descent法：
 
-$$g_{_t}(x)= g_{_{t-1}} (x)-\alpha_t\cdot\frac{\vartheta}{\vartheta g_{t-1}(x)}L(y, g_{t-1}(x))$$ (式4)
+<img src="http://chart.googleapis.com/chart?cht=tx&chl= g_{_t}(x)= g_{_{t-1}} (x)-\alpha_t\cdot\frac{\vartheta}{\vartheta(g_{t-1}(x))}L(y, g_{t-1}(x))" style="border:none;">(式4)
 
 因此可以得知第t輪弱分類器訓練的目標值是loss function 的負梯度，即
 
-$$f_t(x) = -\frac{\vartheta L(y, g_{t-1}(x))}{\vartheta g_{t-1}(x)}$$
+<img src="http://chart.googleapis.com/chart?cht=tx&chl= f_t(x) = -\frac{\vartheta(L(y, g_{t-1}(x)))}{\vartheta(g_{t-1}(x))}" style="border:none;">
 
 整理一下Gradient Boosting 算法流程：
-*Algorithm* Gradient Boosting
+**Algorithm** Gradient Boosting
 1. 初始化
 2. For t=1:T Do : 從1開始到T個弱分類器，分別做：
     2.1 Compute the negative gradient 計算負梯度
@@ -86,6 +91,8 @@ $$f_t(x) = -\frac{\vartheta L(y, g_{t-1}(x))}{\vartheta g_{t-1}(x)}$$
 
 正因為Gradient Boosting + Decision tree，因為樹都很簡單，所以有Decision tree的簡單快速，也不用做Normalization，但他因為他生為Boosting家族的一員，終身都要背著「訓練是按順序的」這個罪名，使它在大規模數據上可能導致速度慢。
 不過既然存在著這樣罪惡，就一定要有新的英雄出現! XGBoost和LightGBM之後再講他們做了什麼改變。
+
+![](https://github.com/Evabc/DataMining_MachineLearning/blob/master/1_Classification/1.3_%E6%A2%AF%E5%BA%A6%E6%8F%90%E5%8D%87%E6%B1%BA%E7%AD%96%E6%A8%B9_GBDT/image/2.jpg "image2")
 
 參考資料1：https://www.youtube.com/watch?v=tH9FH1DH5n0
 
